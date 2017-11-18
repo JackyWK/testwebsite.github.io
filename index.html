@@ -1,15 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
-  <meta charset="utf-8">
-  <title>网站名字</title>
-  <!-- Add some style to your site, see http://getbootstrap.com for details -->
-  <link rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+
+  <title>用three.js实现3d星空动画 | jQuery特效|手机微信网站特效| 网页特效库</title>
+<meta name="keywords" content="canvas动画, 手机微信网站特效, css3动画, html5特效, 网页特效" />
+<meta name="description" content="网页特效库-专注于HTML5、CSS3、js、jQuery、手机移动端等网页特效的手机与分享。特效库始终坚持：无会员、无积分、无限制的“三无原则”，所有的资源都免费提供广大童鞋下载学习和使用。" />
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
 </head>
+
 <body>
-  <h1>YOUR SITE TITLE</h1>
-  <p>Your text blahblahbhalbha</p>
-  <p>Another paragraph!  Maybe more text!</p>
+  	<script id="vertexShader" type="x-shader/x-vertex">
+
+// Uniforms
+uniform float time;
+varying vec3 vNormal;
+      
+void main(void) {
+   vec3 v = position;
+   vNormal = normal;
+   v.z += cos(2.0 * position.x + (time)) * 4085.5;
+	
+   gl_Position = projectionMatrix *
+                modelViewMatrix *
+                vec4(v, 1.0);
+}
+
+		</script>
+
+
+		<script id="fragmentShader" type="x-shader/x-fragment">
+varying vec3 vNormal;
+uniform float time;
+      
+void main(void) {
+    vec3 light = vec3(0.1, .9, .1);
+
+    light = normalize(light);
+
+    float dProd = max(0.2, dot(vNormal, light));
+
+    gl_FragColor = vec4(dProd, // R
+                      dProd, // G
+                      dProd, // B
+                      1.0);  // A
+}
+
+		</script>
+  <script src='js/three.min.js'></script>
+
+      <script src="js/index.js"></script>
+
 </body>
 </html>
